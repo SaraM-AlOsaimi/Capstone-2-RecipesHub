@@ -3,10 +3,8 @@ package com.example.recipehub.Controller;
 import com.example.recipehub.API.ApiResponse;
 import com.example.recipehub.Model.Chef;
 import com.example.recipehub.Service.ChefService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,19 +22,13 @@ public class ChefController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addChef(@RequestBody @Valid Chef chef, Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> addChef(@RequestBody Chef chef){
         chefService.addChef(chef);
         return ResponseEntity.status(200).body(new ApiResponse("Chef added"));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateChef(@PathVariable Integer id,@RequestBody @Valid Chef chef, Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> updateChef(@PathVariable Integer id,@RequestBody Chef chef){
         chefService.updateChef(id, chef);
         return ResponseEntity.status(200).body(new ApiResponse("Chef Updated"));
     }
@@ -54,7 +46,6 @@ public class ChefController {
     public ResponseEntity<?> getChefsByBalanceAbove(@PathVariable Double balance){
         return ResponseEntity.status(200).body(chefService.getChefsByBalanceAbove(balance));
     }
-
 
 
 

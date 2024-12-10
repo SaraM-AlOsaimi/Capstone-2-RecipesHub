@@ -27,19 +27,13 @@ public class MealPlanningController {
     ;
     // 9- Endpoint :
     @PostMapping("/mealsPlan")
-    public ResponseEntity<?> addMealPlan(@RequestBody @Valid MealPlanning mealPlanning, Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> addMealPlan(@RequestBody MealPlanning mealPlanning){
         mealPlanningService.addMealPlan(mealPlanning);
         return ResponseEntity.status(200).body(new ApiResponse("Plan added"));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateMealPlan(@PathVariable Integer id,@RequestBody @Valid MealPlanning mealPlanning,Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> updateMealPlan(@PathVariable Integer id,@RequestBody MealPlanning mealPlanning){
         mealPlanningService.updateMealPlan(id,mealPlanning);
         return ResponseEntity.status(200).body(new ApiResponse("Plan Updated"));
     }

@@ -23,19 +23,13 @@ public class SeasonalIngredientController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addSeasonalIngredient(@RequestBody @Valid SeasonalIngredient seasonalIngredient , Errors errors){
-       if(errors.hasErrors()){
-           return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-       }
+    public ResponseEntity<?> addSeasonalIngredient(@RequestBody SeasonalIngredient seasonalIngredient ){
         seasonalIngredientService.addSeasonalIngredient(seasonalIngredient);
        return ResponseEntity.status(200).body(new ApiResponse("Seasonal Ingredient added"));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateSeasonalIngredient(@PathVariable Integer id,@RequestBody @Valid SeasonalIngredient seasonalIngredient , Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> updateSeasonalIngredient(@PathVariable Integer id,@RequestBody SeasonalIngredient seasonalIngredient){
         seasonalIngredientService.updateSeasonalIngredient(id,seasonalIngredient);
         return ResponseEntity.status(200).body(new ApiResponse("Seasonal Ingredient updated"));
     }

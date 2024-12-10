@@ -23,19 +23,13 @@ public class CommentController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addComment(@RequestBody @Valid Comment comment , Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> addComment(@RequestBody Comment comment){
         commentService.addComment(comment);
         return ResponseEntity.status(200).body(new ApiResponse("Comment added"));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateComment(@PathVariable Integer id,@RequestBody @Valid Comment comment , Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> updateComment(@PathVariable Integer id,@RequestBody Comment comment){
         commentService.updateComment(id,comment);
         return ResponseEntity.status(200).body(new ApiResponse("Comment Updated"));
     }

@@ -3,10 +3,8 @@ package com.example.recipehub.Controller;
 import com.example.recipehub.API.ApiResponse;
 import com.example.recipehub.Model.ForSaleDetail;
 import com.example.recipehub.Service.ForSaleDetailService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,19 +15,13 @@ public class ForSaleDetailController {
     private final ForSaleDetailService forSaleDetailService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addSaleInfo(@RequestBody @Valid ForSaleDetail forSaleDetail , Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> addSaleInfo(@RequestBody ForSaleDetail forSaleDetail){
         forSaleDetailService.addSaleDetail(forSaleDetail);
         return ResponseEntity.status(200).body(new ApiResponse("Sale detail added"));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateSaleInfo(@PathVariable Integer id,@RequestBody @Valid ForSaleDetail forSaleDetail , Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> updateSaleInfo(@PathVariable Integer id,@RequestBody ForSaleDetail forSaleDetail){
         forSaleDetailService.updateSaleDetail(id,forSaleDetail);
         return ResponseEntity.status(200).body(new ApiResponse("Sale detail updated"));
     }

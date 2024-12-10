@@ -6,8 +6,8 @@ import com.example.recipehub.Model.ForSaleDetail;
 import com.example.recipehub.Model.Recipe;
 import com.example.recipehub.Repository.ChefRepository;
 import com.example.recipehub.Repository.ForSaleDetailRepository;
+import com.example.recipehub.Repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.SecondaryRow;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +18,14 @@ public class ForSaleDetailService {
 
     private final ForSaleDetailRepository forSaleDetailRepository;
     private final ChefRepository chefRepository;
+    private final RecipeRepository recipeRepository;
+
 
     public void addSaleDetail(ForSaleDetail forSaleDetail){
+        Recipe recipe = recipeRepository.findRecipeById(forSaleDetail.getRecipeId());
+        if(!recipe.getChefId().equals(forSaleDetail.getChefId())){
+            throw new ApiException("recipe does not belong for this chef");
+        }
         forSaleDetailRepository.save(forSaleDetail);
     }
 

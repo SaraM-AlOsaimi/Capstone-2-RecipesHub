@@ -22,10 +22,7 @@ public class FavoriteController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addFavorite(@RequestBody @Valid Favorite favorite, Errors errors){
-       if(errors.hasErrors()){
-           return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-       }
+    public ResponseEntity<?> addFavorite(@RequestBody Favorite favorite){
        favoriteService.addFavorite(favorite);
        return ResponseEntity.status(200).body(new ApiResponse("Favorite added"));
     }

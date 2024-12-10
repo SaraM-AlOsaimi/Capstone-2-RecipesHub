@@ -22,19 +22,13 @@ public class UserHealthController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addUserHealth(@RequestBody @Valid UserHealth userHealth, Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> addUserHealth(@RequestBody UserHealth userHealth){
         userHealthService.addUserHealth(userHealth);
         return ResponseEntity.status(200).body(new ApiResponse("User Health added"));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateUserHealth(@PathVariable Integer id,@RequestBody @Valid UserHealth userHealth, Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> updateUserHealth(@PathVariable Integer id,@RequestBody UserHealth userHealth){
         userHealthService.updateUserHealth(id,userHealth);
         return ResponseEntity.status(200).body(new ApiResponse("User Health Updated"));
     }
@@ -51,11 +45,5 @@ public class UserHealthController {
     public ResponseEntity<?> getUserThatHasDiabetes(@PathVariable Boolean diabetes){
         return ResponseEntity.status(200).body(userHealthService.getUserThatHasDiabetes(diabetes));
     }
-
-//
-//    @GetMapping("get/user-health/{id}")
-//    public ResponseEntity<?> getRecipesForUserHealth(@PathVariable Integer id){
-//        return ResponseEntity.status(200).body(  userHealthService.getRecipesForUserHealth(id));
-//    }
 
 }

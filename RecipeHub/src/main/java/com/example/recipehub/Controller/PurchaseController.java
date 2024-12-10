@@ -26,10 +26,7 @@ public class PurchaseController {
 
         // 13- Create Purchase (User buys a recipe)
         @PostMapping("/add")
-        public ResponseEntity<?> buyMeal(@RequestBody @Valid Purchase purchase, Errors errors) {
-            if(errors.hasErrors()){
-                return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-            }
+        public ResponseEntity<?> buyMeal(@RequestBody Purchase purchase) {
             purchaseService.buyMeal(purchase);
             return ResponseEntity.status(200).body(new ApiResponse("Purchase created successfully"));
         }

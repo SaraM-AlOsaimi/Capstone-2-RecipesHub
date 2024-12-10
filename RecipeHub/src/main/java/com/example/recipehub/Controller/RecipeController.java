@@ -25,19 +25,13 @@ public class RecipeController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addRecipe(@RequestBody @Valid Recipe recipe , Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> addRecipe(@RequestBody Recipe recipe){
         recipeService.addRecipe(recipe);
         return ResponseEntity.status(200).body(new ApiResponse("Recipe added"));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateRecipe(@PathVariable Integer id,@RequestBody @Valid Recipe recipe , Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> updateRecipe(@PathVariable Integer id,@RequestBody Recipe recipe){
         recipeService.updateRecipe(id, recipe);
         return ResponseEntity.status(200).body(new ApiResponse("Recipe updated"));
     }
