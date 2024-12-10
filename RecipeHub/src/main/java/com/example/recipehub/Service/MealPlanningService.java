@@ -34,8 +34,13 @@ public class MealPlanningService {
             }
         LocalDate planStartDate = mealPlanning.getPlanStartDate();
         LocalDate planEndDate = mealPlanning.getPlanEndDate();
-
-            mealPlanning.setPlanStartDate(planStartDate);
+        if (planStartDate.isBefore(LocalDate.now())) {
+            throw new ApiException("Plan start date cannot be in the past");
+        }
+        if (planEndDate.isBefore(planStartDate)) {
+            throw new ApiException("Plan end date must be after the start date");
+        }
+        mealPlanning.setPlanStartDate(planStartDate);
             mealPlanning.setPlanEndDate(planEndDate);
             mealPlanningRepository.save(mealPlanning);
     }
@@ -79,6 +84,21 @@ public class MealPlanningService {
         renewedMealPlan.setMealTime(oldMealPlan.getMealTime());
         mealPlanningRepository.save(renewedMealPlan);
     }
+
+    //  Endpoint: Get all meal plans for a specific user
+    public List<MealPlanning> getMealPlansByUserId(Integer userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new ApiException("User not found");
+        }
+        return mealPlanningRepository.findMealPlansByUserId(userId);
+    }
+
+    // Endpoint: Get meal plans by date range
+    public List<MealPlanning> getMealPlansByDateRange(LocalDate startDate, LocalDate endDate) {
+        return mealPlanningRepository.findMealPlansByPlanStartDateBetween(startDate, endDate);
+    }
+
+
 
 
 }

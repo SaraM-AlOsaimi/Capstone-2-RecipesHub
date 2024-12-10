@@ -43,11 +43,6 @@ public class Chef {
     @Column(columnDefinition = "TIMESTAMP" , updatable = false)
     private LocalDateTime createdAt;
 
-    @NotEmpty(message = "role is empty")
-    @Pattern(regexp = "^chef$" , message = "role must be chef")
-    @Column(columnDefinition = "varchar(5) not null")
-    private String role;
-
     @NotEmpty(message = "profile is empty")
     @Size(max = 100 , message = "profile max length is 100 characters")
     @Column(columnDefinition = "varchar(100) not null")

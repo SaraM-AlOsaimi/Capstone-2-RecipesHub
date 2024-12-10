@@ -2,14 +2,8 @@ package com.example.recipehub.Service;
 
 
 import com.example.recipehub.API.ApiException;
-import com.example.recipehub.Model.Chef;
-import com.example.recipehub.Model.Purchase;
-import com.example.recipehub.Model.Recipe;
-import com.example.recipehub.Model.User;
-import com.example.recipehub.Repository.ChefRepository;
-import com.example.recipehub.Repository.PurchaseRepository;
-import com.example.recipehub.Repository.RecipeRepository;
-import com.example.recipehub.Repository.UserRepository;
+import com.example.recipehub.Model.*;
+import com.example.recipehub.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +12,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PurchaseService {
-
     private final PurchaseRepository purchaseRepository;
     private final UserRepository userRepository;
-    private final RecipeRepository recipeRepository;
+//    private final RecipeRepository recipeRepository;
     private final ChefRepository chefRepository;
+    private final ForSaleDetailRepository forSaleDetailRepository;
 
     public List<Purchase> getAllPurchase() {
         return purchaseRepository.findAll();
@@ -35,7 +29,7 @@ public class PurchaseService {
       if(user==null){
        throw new ApiException("User not found");
       }
-      Recipe recipe = recipeRepository.findRecipeById(purchase.getRecipeId());
+      ForSaleDetail recipe = forSaleDetailRepository.findForSaleDetailByRecipeId(purchase.getRecipeId());
       if(recipe==null){
           throw new ApiException("Recipe not found");
       }
@@ -52,18 +46,26 @@ public class PurchaseService {
       purchase.setStatus("request-received");
       userRepository.save(user);
       chefRepository.save(chef);
-      recipeRepository.save(recipe);
+      forSaleDetailRepository.save(recipe);
       purchaseRepository.save(purchase);
     }
 
     // 13- Endpoint
-    // Update Purchase: Update details like status
-    public void updatePurchase(Integer purchaseId, Purchase purchase) {
-        Purchase existingPurchase = purchaseRepository.findPurchaseRecipeById(purchaseId);
-        if(existingPurchase == null){
-          throw new ApiException("Purchase not found");
+    // Update status
+    public void updatePurchaseStatus(Integer purchaseId, String newStatus, Integer chefId) {
+        if (!newStatus.matches("^(request-received|prepared|on-the-way|delivered)$")) {
+            throw new ApiException("Invalid status: Status must be one of 'request-received', 'prepared', 'on-the-way', or 'delivered'.");
         }
-        existingPurchase.setStatus(purchase.getStatus());
+        Purchase existingPurchase = purchaseRepository.findPurchaseRecipeById(purchaseId);
+        if (existingPurchase == null) {
+            throw new ApiException("Purchase not found");
+        }
+
+        if (!existingPurchase.getChefId().equals(chefId)) {
+            throw new ApiException("Unauthorized: You can only update your own purchase.");
+        }
+
+        existingPurchase.setStatus(newStatus);
         purchaseRepository.save(existingPurchase);
     }
 
@@ -75,17 +77,17 @@ public class PurchaseService {
             throw new ApiException("Purchase not found");
         }
         User user = userRepository.findUserById(purchase.getUserId());
-        Recipe recipe = recipeRepository.findRecipeById(purchase.getRecipeId());
+        ForSaleDetail recipe = forSaleDetailRepository.findForSaleDetailByRecipeId(purchase.getRecipeId());
         Chef chef = chefRepository.findChefById(purchase.getChefId());
 
         if (purchase.getStatus().equals("request-received")) {
             user.setBalance(user.getBalance() + recipe.getPrice());
             chef.setBalance(chef.getBalance() - recipe.getPrice());
             recipe.setQuantity(recipe.getQuantity() + 1);
-            purchase.setStatus("canceled");
+//            purchase.setStatus("canceled");
             userRepository.save(user);
             chefRepository.save(chef);
-            recipeRepository.save(recipe);
+            forSaleDetailRepository.save(recipe);
         }
         purchaseRepository.delete(purchase);
     }

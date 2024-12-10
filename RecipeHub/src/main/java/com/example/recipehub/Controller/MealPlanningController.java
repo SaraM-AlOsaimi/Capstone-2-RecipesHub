@@ -57,4 +57,11 @@ public class MealPlanningController {
             return ResponseEntity.status(200).body(new ApiResponse("Meal plan renewed successfully"));
         }
 
+
+        @GetMapping("/get/{userId}")
+        public ResponseEntity<?> getMealPlansByUserId(@PathVariable Integer userId){
+        return ResponseEntity.status(200).body(mealPlanningService.getMealPlansByUserId(userId));
+        }
+
 }
+

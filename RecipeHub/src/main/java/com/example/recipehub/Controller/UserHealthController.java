@@ -52,4 +52,10 @@ public class UserHealthController {
         return ResponseEntity.status(200).body(userHealthService.getUserThatHasDiabetes(diabetes));
     }
 
+//
+//    @GetMapping("get/user-health/{id}")
+//    public ResponseEntity<?> getRecipesForUserHealth(@PathVariable Integer id){
+//        return ResponseEntity.status(200).body(  userHealthService.getRecipesForUserHealth(id));
+//    }
+
 }

@@ -39,7 +39,7 @@ public class CommentService {
             throw new ApiException("Comment not found");
         }
         oldComment.setComment(comment.getComment());
-        commentRepository.save(comment);
+        commentRepository.save(oldComment);
     }
 
     public void deleteComment(Integer id){

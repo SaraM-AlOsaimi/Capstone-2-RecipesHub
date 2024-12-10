@@ -43,5 +43,5 @@ public class User {
     @Column(columnDefinition = "TIMESTAMP" , updatable = false)
     private LocalDateTime createdAt;
 
-    private Double balance;
+    private Double balance =0.0;
 }

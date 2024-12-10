@@ -23,17 +23,6 @@ public class SeasonalIngredient {
     @Size(max = 50, message = "Ingredient name must be less than 50 characters")
     private String name;
 
-    @NotNull(message = "Quantity is required")
-    @Positive(message = "Quantity must be a positive number")
-    @Column(columnDefinition = "double not null")
-    private Double quantity;
-
-    @NotEmpty(message = "Unit cannot be empty")
-    @Pattern(regexp = "grams|ml|cups|tablespoons|teaspoons",
-            message = "Unit must be one of: grams, ml, cups, tablespoons, teaspoons")
-    @Column(columnDefinition = "varchar(20) not null")
-    private String unit;
-
     @NotNull(message = "Season start month is required")
     @Column(columnDefinition = "int not null")
     @Min(1) @Max(12)

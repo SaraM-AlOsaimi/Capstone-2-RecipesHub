@@ -2,6 +2,7 @@ package com.example.recipehub.Service;
 
 import com.example.recipehub.API.ApiException;
 import com.example.recipehub.Model.Recipe;
+import com.example.recipehub.Repository.ForSaleDetailRepository;
 import com.example.recipehub.Repository.RecipeRepository;
 import com.example.recipehub.Repository.UserHealthRepository;
 import com.example.recipehub.Repository.UserRepository;
@@ -16,7 +17,6 @@ public class RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final UserRepository userRepository;
-    private final UserHealthRepository userHealthRepository;
 
     //--CRUD
 
@@ -142,11 +142,5 @@ public class RecipeService {
      }
 
 
-    // Method to filter recipes based on the user's health condition
-//    public List<Recipe> filterRecipesByHealthCondition(List<Recipe> recipes, String healthCondition) {
-//        if (healthCondition == null) {
-//            return recipes;
-//        }
-//    }
 
 }

@@ -55,19 +55,7 @@ public class ChefController {
         return ResponseEntity.status(200).body(chefService.getChefsByBalanceAbove(balance));
     }
 
-    // 4- Endpoint :
-    // chef do discount 50% on one of his recipes if the quantity 3 or less
-    @PutMapping("/apply-discount/chef-id/{id}")
-    public ResponseEntity<?> applyDiscountForLowQuantity(@PathVariable Integer id){
-        chefService.applyDiscountForLowQuantity(id);
-        return ResponseEntity.status(200).body(new ApiResponse("Discount applied"));
-    }
 
-    // 15- Endpoint:
-    @PostMapping("/chef/{chefId}/recipe/{recipeId}/sold-out")
-    public ResponseEntity<String> markRecipeAsSoldOut(@PathVariable Integer chefId, @PathVariable Integer recipeId) {
-           chefService.markRecipeAsSoldOut(chefId, recipeId);
-            return ResponseEntity.status(200).body("Marked as Sold out");
-    }
+
 
 }

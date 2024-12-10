@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -14,9 +15,9 @@ public interface RecipeRepository extends JpaRepository<Recipe,Integer> {
 
     Recipe findRecipeById(Integer id);
 
-    List<Recipe> findRecipesByIsForSaleTrue();
-
     List<Recipe> findRecipesByCategory(String category);
+
+    List<Recipe> findRecipesByIsForSaleTrue();
 
     @Query("SELECT r FROM Recipe r WHERE r.nutritionalValue.calories < :calories")
    List<Recipe> findLowCalorieRecipes(Integer calories);
@@ -39,5 +40,6 @@ public interface RecipeRepository extends JpaRepository<Recipe,Integer> {
     // find recipes that does not have Specific ingredient
     @Query("SELECT r FROM Recipe r WHERE lower(r.ingredients) NOT LIKE lower(CONCAT('%', :ingredient, '%'))")
     List<Recipe> findRecipesWithoutIngredient(String ingredient);
+
 
 }

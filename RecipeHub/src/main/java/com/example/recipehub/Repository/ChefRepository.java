@@ -17,7 +17,4 @@ public interface ChefRepository extends JpaRepository<Chef,Integer> {
     List<Chef> getChefsByBalanceAbove(Double balance);
 
 
-    @Query("select r from Recipe r where r.quantity <= 3 and r.chefId=?1")
-    List<Recipe> findLowQuantityRecipesByChefId(Integer chefId);
-
 }

@@ -53,12 +53,4 @@ public class Recipe {
     // recipes that are for sales :
     @Column(columnDefinition = "boolean default false")
     private Boolean isForSale; // Indicates whether the recipe is available for sale or not
-
-    @Positive(message = "Price must be a positive number")
-    private Double price; // Price of the recipe if it's available for sale
-
-    @Positive(message = "Quantity must be a positive number")
-    private Integer quantity; // quantity available from that recipes ,, if it's for sale
-
-
 }

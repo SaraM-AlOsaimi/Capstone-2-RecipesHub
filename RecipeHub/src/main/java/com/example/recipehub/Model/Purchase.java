@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
@@ -32,14 +32,16 @@ public class Purchase {
     @Column(columnDefinition = "int not null")
     private Integer recipeId; // Recipe that was purchased
 
-    @NotEmpty(message = "Status is empty")
-    @Pattern(regexp = "^request-received|prepared|on-the-way|delivered|canceled")
-    @Column(columnDefinition = "varchar(15) not null")
+    @Pattern(regexp = "^request-received|prepared|on-the-way|delivered")
+    @Column(columnDefinition = "varchar(100)")
     private String status;
 
     @NotEmpty(message = "Location is empty")
     @Column(columnDefinition = "varchar(15) not null")
     private String userLocation;
+
+    @Positive(message = "Quantity must be a positive number")
+    private Integer quantity;
 
 }
 

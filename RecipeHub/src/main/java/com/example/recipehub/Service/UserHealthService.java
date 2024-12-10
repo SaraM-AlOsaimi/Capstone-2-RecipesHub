@@ -1,7 +1,9 @@
 package com.example.recipehub.Service;
 
 import com.example.recipehub.API.ApiException;
+import com.example.recipehub.Model.Recipe;
 import com.example.recipehub.Model.UserHealth;
+import com.example.recipehub.Repository.RecipeRepository;
 import com.example.recipehub.Repository.UserHealthRepository;
 import com.example.recipehub.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ public class UserHealthService {
 
     private final UserHealthRepository userHealthRepository;
     private final UserRepository userRepository;
+    private final RecipeRepository recipeRepository;
 
 
     //-----CRUD
@@ -69,5 +72,24 @@ public class UserHealthService {
         return userHealth;
     }
 
+
+    // Endpoint
+    // Find Recipes Based on User Health Profile .. Diabetes
+//    public List<Recipe> getRecipesForUserHealth(Integer userId) {
+//        UserHealth userHealth = userHealthRepository.findUserHealthById(userId);
+//        if (userHealth == null) {
+//            throw new ApiException("User health profile not found");
+//        }
+//        List<Recipe> recipes;
+//        if (userHealth.getHasDiabetes()) {
+//            recipes = recipeRepository.findLowSugarRecipes(5.0);
+//        } else {
+//            recipes = recipeRepository.findAll();
+//        }
+//        if (recipes.isEmpty()) {
+//            throw new ApiException("No recipes found based on the user's health profile");
+//        }
+//        return recipes;
+//    }
 
 }

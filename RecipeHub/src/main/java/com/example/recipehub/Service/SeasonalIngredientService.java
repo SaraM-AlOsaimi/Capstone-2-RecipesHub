@@ -29,8 +29,6 @@ public class SeasonalIngredientService {
             throw new ApiException("SeasonalIngredient not found");
         }
         oldSeasonalIngredient.setName(seasonalIngredient.getName());
-        oldSeasonalIngredient.setQuantity(seasonalIngredient.getQuantity());
-        oldSeasonalIngredient.setUnit(seasonalIngredient.getUnit());
         seasonalIngredientRepository.save(oldSeasonalIngredient);
     }
 

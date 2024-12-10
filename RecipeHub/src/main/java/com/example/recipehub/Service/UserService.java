@@ -1,9 +1,7 @@
 package com.example.recipehub.Service;
 
 import com.example.recipehub.API.ApiException;
-import com.example.recipehub.Model.Recipe;
 import com.example.recipehub.Model.User;
-import com.example.recipehub.Model.UserHealth;
 import com.example.recipehub.Repository.RecipeRepository;
 import com.example.recipehub.Repository.UserHealthRepository;
 import com.example.recipehub.Repository.UserRepository;
@@ -74,16 +72,14 @@ public class UserService {
 
     // Endpoint 11 :
     // user add balance to his account
-    public void useraddBalance(Integer id,Double amount){
-     User user = userRepository.findUserById(id);
-     if(user==null){
-         throw new ApiException("User not found");
-     }
-     if(amount <= 0){
-        throw new ApiException("Invalid amount");
-     }
-     user.setBalance(user.getBalance() + amount);
-     userRepository.save(user);
+    public void useraddBalance(Integer userId, Double amount) {
+        User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new ApiException("User not found");
+        }
+        Double currentBalance = user.getBalance() == null ? 0.0 : user.getBalance();
+        user.setBalance(currentBalance + amount);
+        userRepository.save(user);
     }
 
 }
